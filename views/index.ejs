@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Nhập Ô Tô</title>
+  <script>
+    function validateForm(event) {
+      let isValid = true;
+
+      // Lấy các giá trị input
+      const maXe = document.getElementById("MaXe").value;
+      const name = document.getElementById("Name").value;
+      const price = document.getElementById("Price").value;
+      const year = document.getElementById("Year").value;
+      const brand = document.getElementById("Brand").value;
+
+      // Kiểm tra Mã Xe không trống
+      if (maXe === "") {
+        document.getElementById("errorMaXe").textContent = "Mã xe không được để trống!";
+        isValid = false;
+      } else {
+        document.getElementById("errorMaXe").textContent = "";
+      }
+
+      // Kiểm tra Tên Xe phải là chữ
+      const nameRegex = /^[A-Za-z\s]+$/;
+      if (!nameRegex.test(name)) {
+        document.getElementById("errorTenXe").textContent = "Tên xe phải là chữ!";
+        isValid = false;
+      } else {
+        document.getElementById("errorTenXe").textContent = "";
+      }
+
+      // Kiểm tra Giá Xe phải là số
+      if (isNaN(price) || price <= 0) {
+        document.getElementById("errorGiaXe").textContent = "Giá xe phải là số và lớn hơn 0!";
+        isValid = false;
+      } else {
+        document.getElementById("errorGiaXe").textContent = "";
+      }
+
+      // Kiểm tra Năm Sản Xuất
+      if (isNaN(year) || year < 1980 || year > 2024) {
+        document.getElementById("errorNamSX").textContent = "Năm sản xuất phải từ 1980 đến 2024!";
+        isValid = false;
+      } else {
+        document.getElementById("errorNamSX").textContent = "";
+      }
+
+      // Kiểm tra Thương Hiệu không trống
+      if (brand === "") {
+        document.getElementById("errorThuongHieu").textContent = "Thương hiệu không được để trống!";
+        isValid = false;
+      } else {
+        document.getElementById("errorThuongHieu").textContent = "";
+      }
+
+      // Nếu không hợp lệ thì ngừng submit form
+      if (!isValid) {
+        event.preventDefault();
+      }
+    }
+  </script>
+  <style>
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+<h1>Nhập thông tin Ô Tô</h1>
+<form action="/submit" method="POST" onsubmit="validateForm(event)">
+  <label for="MaXe">Mã Xe:</label>
+  <input type="text" id="MaXe" name="MaXe"> <span class="error" id="errorMaXe"></span><br><br>
+
+  <label for="Name">Tên Xe:</label>
+  <input type="text" id="Name" name="Name"> <span class="error" id="errorTenXe"></span><br><br>
+
+  <label for="Price">Giá Xe:</label>
+  <input type="text" id="Price" name="Price"> <span class="error" id="errorGiaXe"></span><br><br>
+
+  <label for="Year">Năm Sản Xuất:</label>
+  <input type="text" id="Year" name="Year"> <span class="error" id="errorNamSX"></span><br><br>
+
+  <label for="Brand">Thương Hiệu:</label>
+  <input type="text" id="Brand" name="Brand"> <span class="error" id="errorThuongHieu"></span><br><br>
+
+  <button type="submit">Gửi</button>
+</form>
+<br><br>
+<a href="/cars">Xem danh sách Ô Tô</a>
+</body>
+</html>
